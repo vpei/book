@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8" />
+<title>IPFS网关提速</title>
+<link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<script type="text/javascript">
+    function goBack() {  
+		inputDom = document.getElementById("url")	//找到元素，假如给input元素加了id属性 且 值为:text
+		var text = inputDom.value;					//获取元素值
+        window.self.location = "./" + text;  
+    }
+	//javascript:form.submit();
+</script> 
+</head>
+<body>
+     <form id="form" class="well" style="width: 50em; margin: auto; margin-top: 100px;" name="form" method="post">
+          <h3>IPFS网关提速</h3>
+          <br />
+          <div class="input-group input-group-md"><input id="url" type="text" class="form-control" value="https://dweb.link/ipfs/QmVkbauSDEaMP4Tkq6Epm9uW75mWm136n81YH8fGtfwdHU" onfocus="if (value==defaultValue)value=''" onblur="if(!value)value=defaultValue"/><span class="input-group-addon" id="sizing-addon1"><a href="javascript:goBack();"><i class="glyphicon glyphicon-search" ></i></a></span>
+          </div>
+          <br />
+     </form>
+  </body>			 			 
+</html>
