@@ -3,6 +3,10 @@
 
 import base64
 import requests
+from check import get_ipfs
+
+xxx = get_ipfs('https://ipfs.io/ipfs/QmXd2UvprN5fiV4C2qZm8zuWWMLcYrFNaxKFoagmu1wz5a')
+
 class Ipfs():
 
     # 从字符中取两不同字符串中间的字符，print(sub_link)，参数：文本，第一字符串，第二字符串，是否保留字符串
@@ -43,12 +47,6 @@ class Ipfs():
 
     def get_info(url):
         try:
-            if(url.find('/ipfs/') > -1):
-                url = '/ipfs/' + url.rsplit('/ipfs/', 1)[1]
-            elif(url.find('/ipns/') > -1):
-                url = '/ipns/' + url.rsplit('/ipns/', 1)[1]
-            else:
-                url = '/ipfs/' + url
             ipfs = Ipfs.read_txt('ipfs.txt')
             ipfs = Ipfs.get_str_base64(ipfs.decode('utf-8'))
             ipfs = base64.b64decode(ipfs.encode('utf-8')).decode('utf-8').replace('\r','')
@@ -70,3 +68,5 @@ class Ipfs():
         response_header = 'HTTP/1.1 301 Moved Permanently\r\nServer: PWS1.0\r\nLocation: ' + url
         response_data = (response_header + '\r\n\r\n').encode('utf-8')   # 将数据组装成HTTP响应报文数据发送给浏览器
         return response_data
+
+

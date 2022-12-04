@@ -12,8 +12,10 @@ from cls import LocalFile, MySQL
 class Books():
     def get_book_info(id):
         jsontext = {'books':[]}     # 默认返回空字典数据格式
-        response_header = "HTTP/1.1 404 Not Found\r\nServer: PWS1.0"
-        response_body = 'Sorry, File Not Found'
+        # response_header = "HTTP/1.1 404 Not Found\r\nServer: PWS1.0"
+        # response_body = 'Sorry, File Not Found'
+        response_header = 'HTTP/1.1 200 OK\r\nServer: PWS1.0'
+        response_body = 'index'
         try:
             LocalFile.write_LogFile('ID:' + id)
             zid = 0
@@ -84,7 +86,7 @@ class Books():
                 # 临时测试数据
                 jsontext['books'].append({'zid': str(zid), 'md5': md5, 'title': title, 'author': author, 'language': language, 'year': year, 'publisher': publisher, 'description': description, 'extension': extension, 'cid': cid})
                 LocalFile.write_LogFile('\n' + str(jsontext))
-                response_header = "HTTP/1.1 200 OK\r\nServer: PWS1.0"    # 响应头
+                response_header = 'HTTP/1.1 200 OK\r\nServer: PWS1.0'    # 响应头
                 # response_body = nodeurl                                # 响应体
                 response_body = json.dumps(jsontext, indent=2, ensure_ascii=False)
             # response_header = 'HTTP/1.1 301 Moved Permanently\r\nServer: PWS1.0\r\nLocation: ' + nodeurl

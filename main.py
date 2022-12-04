@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import socket
-from books import Books
+from book import Books
 from cls import LocalFile
 from cls import StrText
 
