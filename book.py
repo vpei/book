@@ -30,18 +30,8 @@ class Books():
             year = ''
             cid = ''
             data = ''
-            # CID获取MD5
-            if(len(id) == 46 or len(id) == 62):
-                cid = id
-                data = MySQL.get_cont('select zid from zlib12 where cid = \'' + cid + '\'')
-                if(data != ''):
-                    id = str(data[0])
-                else:
-                    data = MySQL.get_cont('select md5 from libgen where cid = \'' + cid + '\'')
-                    if(data != ''):
-                        id = data[0]
             # 通过MD5查询记录
-            if(len(id) == 32):
+            if(len(id) == 32 and id.isalnum() == True):
                 data = MySQL.get_table_one('select zlibrary_id, extension, md5, md5_reported, title, author, publisher, language, year, description from books where md5 = \'' + id + '\' or md5_reported = \'' + id + '\'')
             elif(id.isdigit() == True):
                 if(int(id) > 22433982):
@@ -52,7 +42,7 @@ class Books():
                 data = MySQL.get_table_one('select zlibrary_id, extension, md5, md5_reported, title, author, publisher, language, year, description from books where zlibrary_id = ' + id)
             else:
                 id = 0
-                data = MySQL.get_table_one('select zlibrary_id, extension, md5, md5_reported, title, author, publisher, language, year, description from books where title like \'%' + id + '%\'')
+                data = MySQL.get_table_one('select zlibrary_id, extension, md5, md5_reported, title, author, publisher, language, year, description from books where title like \'%' + id + '%\' limit 30')
                 # 查询图书
             if(data != ''):
                 zid = data[0]
@@ -69,13 +59,17 @@ class Books():
                 description = data[9]
                 description = re.sub('<[^<]+?>', '', description).replace('\n', '').strip()
                 if(cid == ''):
-                    data = MySQL.get_cont('select cid from zlib12 where md5 = \'' + md5 + '\' or md5 = \'' + md5_reported + '\'')
+                    data = MySQL.get_cont('select cid from zlib12 where id = ' + str(zid))
                     if(data != ''):
                         cid = data[0]
-                    if(len(cid) < 46):
+                    if(cid == ''):
                         data = MySQL.get_cont('select cid from libgen where md5 = \'' + md5 + '\' or md5 = \'' + md5_reported + '\'')
                         if(data != ''):
                             cid = data[0]
+                        if(cid == ''):
+                            data = MySQL.get_cont('select cid from zlib122 where id = \'' + md5 + '\' or md5 = \'' + md5_reported + '\'')
+                            if(data != ''):
+                                cid = data[0]
                 # for j in data:
                 #     print(j[0]) # 处理多条记录
             response_data = ''
