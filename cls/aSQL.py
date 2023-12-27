@@ -3,12 +3,13 @@
 
 import os
 #pip3 install mysql-connector
+#pip install mysql-connector-python
 import mysql.connector
 from cls import LocalFile
 
 host = os.environ.get('host')
 if(host == None):
-    host = '192.168.8.5'
+    host = '127.0.0.1'
 port = os.environ.get('port')
 if(port == None):
     port = 3306
@@ -22,7 +23,7 @@ database = os.environ.get('database')
 if(database == None):
     database = 'newbook'
 
-class MySQL():
+class AmySQL():
     def get_db():
         try:
             # 接收参数：user, password, host, port=3306, unix_socket and database
@@ -39,7 +40,7 @@ class MySQL():
         data = ''
         try:
             # 打开数据库连接 返回一个MySQLConnection Object
-            db = MySQL.get_db()
+            db = AmySQL.get_db()
             # 使用cursor()方法获取操作游标 
             cursor = db.cursor()
             # 使用execute方法执行SQL语句
@@ -52,13 +53,13 @@ class MySQL():
             if(data == None):
                 data = ''
         except Exception as ex:
-            print('MySQL-49-Exception:\n' + str(ex))
+            print('MySQL-55-Exception:\n' + str(ex))
         return data
 
     def get_table(sql):
         data = ''
         try:
-            db = MySQL.get_db()
+            db = AmySQL.get_db()
             cursor = db.cursor()
             cursor.execute(sql)
             data = cursor.fetchall()
@@ -72,7 +73,7 @@ class MySQL():
     def get_cont(sql):
         data = ''
         try:
-            db = MySQL.get_db()
+            db = AmySQL.get_db()
             cursor = db.cursor()
             cursor.execute(sql)
             data = cursor.fetchone()
@@ -86,7 +87,7 @@ class MySQL():
     def mysql_execute(sql):
         data = ''
         try:
-            mysql = MySQL.get_db()
+            mysql = AmySQL.get_db()
             cursor = mysql.cursor()
             try:
                 # 执行SQL语句

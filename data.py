@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
-from cls import LocalFile, MySQL
+from cls import LocalFile, AmySQL
 
 try:
     ii = 0
-    data = MySQL.get_table('select cid, md5 from zlib122 order by md5')
+    data = AmySQL.get_table('select cid, md5 from zlib122 order by md5')
     dcount = len(data)
     for md5 in data:
         try:
-            d4 = MySQL.mysql_execute('insert into zlib121 (cid, md5) values (\'' + md5[0] + '\', \'' + md5[1] + '\')')
+            d4 = AmySQL.mysql_execute('insert into zlib121 (cid, md5) values (\'' + md5[0] + '\', \'' + md5[1] + '\')')
             ii = ii + 1
             print(str(ii) + '/' + str(dcount))
         except Exception as ex:
             print('\nMain-32-Exception:' + str(ex))
             LocalFile.write_LogFile('Main-Line-17-Exception:\n' + str(ex))# + '\r\nrecv_data:' + recv_data.decode('utf-8'))
-        d4 = MySQL.mysql_execute('delete from zlib122 where md5 = \'' + md5[0] + '\'')
+        d4 = AmySQL.mysql_execute('delete from zlib122 where md5 = \'' + md5[0] + '\'')
 
     # i = 0
     # ii = 0

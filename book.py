@@ -5,7 +5,7 @@ import json
 import re
 # import sys
 # sys.path.append('..')
-from cls import LocalFile, MySQL
+from cls import LocalFile, AmySQL
 # from cls import LocalFile
 # from cls.MySQL import MySQL
 
@@ -18,7 +18,7 @@ class Books():
         response_body = 'index'
         try:
             LocalFile.write_LogFile('ID:' + id)
-            zid = 0
+            zid = '0'
             md5 = ''
             md5_reported = ''
             title = ''
@@ -32,18 +32,22 @@ class Books():
             data = ''
             # 通过MD5查询记录
             if(len(id) == 32 and id.isalnum() == True):
-                data = MySQL.get_table_one('select zlibrary_id, extension, md5, md5_reported, title, author, publisher, language, year, description from books where md5 = \'' + id + '\' or md5_reported = \'' + id + '\'')
+                data = AmySQL.get_table_one('select zlibrary_id, extension, md5, md5_reported, title, author, publisher, language, year, description from books where md5 = \'' + id + '\' or md5_reported = \'' + id + '\'')
             elif(id.isdigit() == True):
-                if(int(id) > 22433982):
-                    data = MySQL.get_table_one('select zlibrary_id from isbn where isbn = \'' + id + '\'')
-                    if(data != ''):
-                        id = str(data[0])
-                zid = id
-                data = MySQL.get_table_one('select zlibrary_id, extension, md5, md5_reported, title, author, publisher, language, year, description from books where zlibrary_id = ' + id)
+                if(int(id) <= 22433982):
+                    zid = str(id)
+                    data = AmySQL.get_table_one('select zlibrary_id, extension, md5, md5_reported, title, author, publisher, language, year, description from books where zlibrary_id = ' + str(zid))
             else:
-                id = 0
-                data = MySQL.get_table_one('select zlibrary_id, extension, md5, md5_reported, title, author, publisher, language, year, description from books where title like \'%' + id + '%\' limit 30')
-                # 查询图书
+                if(id.isalnum() == True):
+                    data = AmySQL.get_table_one('select zlibrary_id from isbn where isbn = \'' + id + '\'')
+                    if(data != ''):
+                        zid = str(data[0])
+                if(zid != '0'):
+                    data = AmySQL.get_table_one('select zlibrary_id, extension, md5, md5_reported, title, author, publisher, language, year, description from books where zlibrary_id = ' + zid)
+                else:
+                    #id = 0
+                    data = AmySQL.get_table_one('select zlibrary_id, extension, md5, md5_reported, title, author, publisher, language, year, description from books where title like \'%' + str(id) + '%\' limit 30')
+                    # 查询图书
             if(data != ''):
                 zid = data[0]
                 extension = data[1]
@@ -59,15 +63,15 @@ class Books():
                 description = data[9]
                 description = re.sub('<[^<]+?>', '', description).replace('\n', '').strip()
                 if(cid == ''):
-                    data = MySQL.get_cont('select cid from zlib12 where id = ' + str(zid))
+                    data = AmySQL.get_cont('select cid from zlib12 where id = ' + str(zid))
                     if(data != ''):
                         cid = data[0]
                     if(cid == ''):
-                        data = MySQL.get_cont('select cid from libgen where md5 = \'' + md5 + '\' or md5 = \'' + md5_reported + '\'')
+                        data = AmySQL.get_cont('select cid from libgen where md5 = \'' + md5 + '\' or md5 = \'' + md5_reported + '\'')
                         if(data != ''):
                             cid = data[0]
                         if(cid == ''):
-                            data = MySQL.get_cont('select cid from zlib122 where id = \'' + md5 + '\' or md5 = \'' + md5_reported + '\'')
+                            data = AmySQL.get_cont('select cid from zlib122 where id = \'' + md5 + '\' or md5 = \'' + md5_reported + '\'')
                             if(data != ''):
                                 cid = data[0]
                 # for j in data:
