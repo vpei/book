@@ -18,9 +18,9 @@ def main():
                 print('Decoding the received data:\n', recv_data.strip('\n'))
                 # GET /3feaca47d82f5900c53ab0082c778957 HTTP/1.1
                 if(recv_data.find('/ipfs') > -1):
-                    url = '/ipfs' + Ipfs.get_str_btw(recv_data, '/ipfs', ' ', 0).strip('/')
+                    url = '/ipfs/' + Ipfs.get_str_btw(recv_data, '/ipfs', ' ', 0).strip('/')
                 elif(recv_data.find('/ipns') > -1):
-                    url = '/ipns' + Ipfs.get_str_btw(recv_data, '/ipns', ' ', 0).strip('/')
+                    url = '/ipns/' + Ipfs.get_str_btw(recv_data, '/ipns', ' ', 0).strip('/')
                 else:
                     url = Ipfs.get_str_btw(recv_data, 'GET ', ' ', 0).strip('/')
                 if(url == ''):
