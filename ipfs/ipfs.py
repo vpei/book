@@ -56,7 +56,7 @@ class Ipfs():
             # ustat = ipfs.url_stat(nodeurl, 5, 5)
             # if(ustat != 200):
             for nodeurl in node:
-                nurl = nodeurl + '' + url
+                nurl = nodeurl + '/' + url
                 ustat = Ipfs.url_stat(nurl, 3, 3)
                 if(ustat == 200):
                     url = nurl
