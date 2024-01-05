@@ -5,7 +5,7 @@ import base64
 import requests
 from check import get_ipfs
 
-xxx = get_ipfs('https://ipfs.io/ipfs/QmXd2UvprN5fiV4C2qZm8zuWWMLcYrFNaxKFoagmu1wz5a')
+# xxx = get_ipfs('https://ipfs.io/ipfs/QmXd2UvprN5fiV4C2qZm8zuWWMLcYrFNaxKFoagmu1wz5a')
 
 class Ipfs():
 
@@ -64,9 +64,8 @@ class Ipfs():
         except Exception as ex:
             print(f"Book-79-Exception:{ex}")
         if(url.find('http://') == -1 and url.find('https://') == -1):
-            url = 'https://ipfs.io' + url
+            url = 'https://ipfs.io/' + url
         response_header = 'HTTP/1.1 301 Moved Permanently\r\nServer: PWS1.0\r\nLocation: ' + url
         response_data = (response_header + '\r\n\r\n').encode('utf-8')   # 将数据组装成HTTP响应报文数据发送给浏览器
         return response_data
-
 

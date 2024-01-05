@@ -62,7 +62,7 @@ def get_ipfs(url):
 
     threadID = 1
     threadList = ["Thread-1", "Thread-2", "Thread-3"]
-    nameList = ["http://122.225.207.101:8080", "http://61.155.145.154:8080", "http://121.36.203.35:8080", "http://118.123.241.64:8080", "http://222.213.23.194:8080"]
+    nameList = ["http://81.68.68.232:8080", "http://220.243.137.16:8080", "http://223.111.148.196:8080", "http://14.215.165.43:8080", "http://133.18.228.34:8080"]
     # 创建新线程
     #for tName in threadList:
     for tName in nameList:
