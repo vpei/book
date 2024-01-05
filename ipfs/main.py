@@ -17,7 +17,12 @@ def main():
             if(recv_data != ''):
                 print('Decoding the received data:\n', recv_data.strip('\n'))
                 # GET /3feaca47d82f5900c53ab0082c778957 HTTP/1.1
-                url = Ipfs.get_str_btw(recv_data, 'GET ', ' ', 0).strip('/')
+                if(recv_data.find('/ipfs') > -1):
+                    url = '/ipfs' + Ipfs.get_str_btw(recv_data, '/ipfs', ' ', 0).strip('/')
+                elif(recv_data.find('/ipns') > -1):
+                    url = '/ipns' + Ipfs.get_str_btw(recv_data, '/ipns', ' ', 0).strip('/')
+                else:
+                    url = Ipfs.get_str_btw(recv_data, 'GET ', ' ', 0).strip('/')
                 if(url == ''):
                     # 分割http响应头和响应body
                     response_data = ('HTTP/1.1 200 OK\r\nServer: PWS1.0\r\n\r\n' + read_html('./cha.html')).encode('utf-8')

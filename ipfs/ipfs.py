@@ -56,7 +56,7 @@ class Ipfs():
             # ustat = ipfs.url_stat(nodeurl, 5, 5)
             # if(ustat != 200):
             for nodeurl in node:
-                nurl = nodeurl + '/' + url
+                nurl = nodeurl + '' + url
                 ustat = Ipfs.url_stat(nurl, 3, 3)
                 if(ustat == 200):
                     url = nurl
@@ -64,8 +64,7 @@ class Ipfs():
         except Exception as ex:
             print(f"Book-79-Exception:{ex}")
         if(url.find('http://') == -1 and url.find('https://') == -1):
-            url = 'https://ipfs.io/' + url
+            url = 'https://ipfs.io' + url
         response_header = 'HTTP/1.1 301 Moved Permanently\r\nServer: PWS1.0\r\nLocation: ' + url
         response_data = (response_header + '\r\n\r\n').encode('utf-8')   # 将数据组装成HTTP响应报文数据发送给浏览器
         return response_data
-
